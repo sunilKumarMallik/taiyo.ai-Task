@@ -19,10 +19,12 @@ interface CountryData {
   todayCases: number;
   todayDeaths: number;
 }
+//dependency
 const customIcon = new Icon({
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
 });
+//marker for the map as while deploying the marker is not appered so i manually bring marker from leaflet pack
 const Loader = () => (
   <div className="flex items-center justify-center h-full mt-14">
     <div className="loader--style1 mt-14" id="Main-Loader">
@@ -69,15 +71,18 @@ const Maps: React.FC<{ countries: CountryData[] }> = ({ countries }) => {
   return (
     <div className="flex justify-center items-center mt-4">
       <MapContainer center={[0, 0]} zoom={3} style={{ height: '65vh', width: '95%' }}>
+        {/* setting up the map */}
         <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" />
 
         {countries.map((country: any, index: any): any => (
           <Marker
             key={index}
             position={[country.countryInfo.lat, country.countryInfo.long]}
+            // geting those co-ordinates from api and set them up for location tracking
             icon={customIcon}
           >
             <Popup>
+              {/* the popup for ach country active case,recover case , and death case */}
               <div>
                 <h2>{country.country}</h2>
                 <p>Active: {country.active}</p>
@@ -95,8 +100,11 @@ const Maps: React.FC<{ countries: CountryData[] }> = ({ countries }) => {
 const MapComponent: React.FC = () => {
   const countriesData = useSelector((state: any) => state.country.countries);
   const worldWideData = useSelector((state: any) => state.country.world);
+  //set up those apis
   const [loading, setLoading] = useState<boolean>(true);
+  //loader
   const dispatch = useDispatch();
+  //despatch data
   console.log('worldWideData', worldWideData);
   useEffect(() => {
     const fetchData = async () => {
@@ -127,6 +135,7 @@ const MapComponent: React.FC = () => {
   function isEmpty(obj: any) {
     return Object.keys(obj).length === 0;
   }
+  // is empty for conditional rendering as for somehow in first api call data is not coming into the apis
   return (
     <div>
       {worldWideData && !isEmpty(worldWideData) && (
@@ -138,6 +147,7 @@ const MapComponent: React.FC = () => {
             <div className="flex justify-center items-center text-2xl">Total Cases:</div>
             <div className="flex justify-center items-center text-4xl rounded-none p-4 glass-box border-black">
               {worldWideData?.cases}
+              {/* data binding */}
             </div>
             <div className="flex justify-center items-center text-2xl">Active Cases:</div>
             <div className="flex justify-center items-center text-4xl rounded-none p-4 glass-box border-black">
