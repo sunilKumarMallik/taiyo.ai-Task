@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Icon } from 'leaflet';
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllCountries, getWorldWideData } from 'redux/slices/countrySlice';
 import { UseFetcher } from 'api-services/axios-common';
 import LineGraph from '../screens/LineGraph';
 import { useSpring, animated } from 'react-spring';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 interface CountryData {
   active: number;
@@ -16,6 +19,10 @@ interface CountryData {
   todayCases: number;
   todayDeaths: number;
 }
+const customIcon = new Icon({
+  iconUrl: markerIcon,
+  shadowUrl: markerShadow,
+});
 const Loader = () => (
   <div className="flex items-center justify-center h-full mt-14">
     <div className="loader--style1 mt-14" id="Main-Loader">
@@ -65,7 +72,11 @@ const Maps: React.FC<{ countries: CountryData[] }> = ({ countries }) => {
         <TileLayer url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png" />
 
         {countries.map((country: any, index: any): any => (
-          <Marker key={index} position={[country.countryInfo.lat, country.countryInfo.long]}>
+          <Marker
+            key={index}
+            position={[country.countryInfo.lat, country.countryInfo.long]}
+            icon={customIcon}
+          >
             <Popup>
               <div>
                 <h2>{country.country}</h2>
@@ -110,30 +121,34 @@ const MapComponent: React.FC = () => {
       config: { mass: 1, tension: 100, friction: 10 },
     });
     // eslint-disable-next-line react/prop-types
-    return <animated.div>{number.to((n) => n.toFixed(0))}</animated.div>;
+    return <animated.div>{n > 0 && number.to((n) => n.toFixed(0))}</animated.div>;
+  }
+
+  function isEmpty(obj: any) {
+    return Object.keys(obj).length === 0;
   }
   return (
     <div>
-      {worldWideData && (
+      {worldWideData && !isEmpty(worldWideData) && (
         <div className="container mx-auto">
-          <div className="flex justify-center align-middle">
+          <div className="flex justify-center items-center">
             <h1 className="text-3xl">Global Situation</h1>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-            <div className="flex justify-center align-middle text-2xl">Total Cases :</div>
-            <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12 xl:mr-9">
+            <div className="flex justify-center items-center text-2xl">Total Cases:</div>
+            <div className="flex justify-center items-center text-4xl rounded-none p-4 glass-box border-black">
               {worldWideData?.cases}
             </div>
-            <div className="flex justify-center align-middle text-2xl">Active Cases :</div>
-            <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
+            <div className="flex justify-center items-center text-2xl">Active Cases:</div>
+            <div className="flex justify-center items-center text-4xl rounded-none p-4 glass-box border-black">
               {worldWideData?.active}
             </div>
-            <div className="flex justify-center align-middle text-2xl">Recovered :</div>
-            <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
+            <div className="flex justify-center items-center text-2xl">Recovered:</div>
+            <div className="flex justify-center items-center text-4xl rounded-none p-4 glass-box border-black">
               {worldWideData?.recovered}
             </div>
-            <div className="flex justify-center align-middle text-2xl">Death :</div>
-            <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
+            <div className="flex justify-center items-center text-2xl">Deaths:</div>
+            <div className="flex justify-center items-center text-4xl rounded-none p-4 glass-box border-black">
               {worldWideData?.deaths}
             </div>
           </div>

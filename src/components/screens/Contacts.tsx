@@ -61,10 +61,12 @@ const Contacts: React.FC = () => {
     <>
       {!countriesData.length && (
         <div className="flex items-center justify-center">
-          <div className="text-2xl h-48 w-1/4 bg-gray-200 shadow-lg flex items-center justify-center">
-            No Contacts Found <br />
-            Please add Contact from <br />
-            Create Contact Button
+          <div className="text-2xl h-48 w-full md:w-1/2 lg:w-1/3 bg-gray-200 shadow-lg flex flex-col items-center justify-center p-4">
+            <p className="text-center mb-4">
+              No Contacts Found <br />
+              Please add Contact from <br />
+              Create Contact Button
+            </p>
           </div>
         </div>
       )}
