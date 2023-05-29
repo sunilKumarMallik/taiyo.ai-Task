@@ -121,19 +121,19 @@ const MapComponent: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
           <div className="flex justify-center align-middle text-2xl">Total Cases :</div>
           <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black">
-            {<Numbers n={worldWideData?.cases} />}
+            {worldWideData?.cases}
           </div>
           <div className="flex justify-center align-middle text-2xl">Active Cases :</div>
           <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
-            {<Numbers n={worldWideData?.active} />}
+            {worldWideData?.active}
           </div>
           <div className="flex justify-center align-middle text-2xl">Recovered :</div>
           <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
-            {<Numbers n={worldWideData?.recovered} />}
+            {worldWideData?.recovered}
           </div>
           <div className="flex justify-center align-middle text-2xl">Death :</div>
           <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
-            {<Numbers n={worldWideData?.deaths} />}
+            {worldWideData?.deaths}
           </div>
         </div>
       </div>
