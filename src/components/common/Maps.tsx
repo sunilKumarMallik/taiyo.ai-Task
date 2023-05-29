@@ -114,29 +114,31 @@ const MapComponent: React.FC = () => {
   }
   return (
     <div>
-      <div className="container mx-auto">
-        <div className="flex justify-center align-middle">
-          <h1 className="text-3xl">Global Situation</h1>
+      {worldWideData && (
+        <div className="container mx-auto">
+          <div className="flex justify-center align-middle">
+            <h1 className="text-3xl">Global Situation</h1>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+            <div className="flex justify-center align-middle text-2xl">Total Cases :</div>
+            <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black">
+              {worldWideData?.cases}
+            </div>
+            <div className="flex justify-center align-middle text-2xl">Active Cases :</div>
+            <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
+              {worldWideData?.active}
+            </div>
+            <div className="flex justify-center align-middle text-2xl">Recovered :</div>
+            <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
+              {worldWideData?.recovered}
+            </div>
+            <div className="flex justify-center align-middle text-2xl">Death :</div>
+            <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
+              {worldWideData?.deaths}
+            </div>
+          </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
-          <div className="flex justify-center align-middle text-2xl">Total Cases :</div>
-          <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black">
-            {worldWideData?.cases}
-          </div>
-          <div className="flex justify-center align-middle text-2xl">Active Cases :</div>
-          <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
-            {worldWideData?.active}
-          </div>
-          <div className="flex justify-center align-middle text-2xl">Recovered :</div>
-          <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
-            {worldWideData?.recovered}
-          </div>
-          <div className="flex justify-center align-middle text-2xl">Death :</div>
-          <div className="flex justify-center text-4xl rounded-none p-4 glass-box border-black ">
-            {worldWideData?.deaths}
-          </div>
-        </div>
-      </div>
+      )}
       {loading ? <Loader /> : <Maps countries={countriesData} />}
 
       <LineGraph />
