@@ -102,7 +102,7 @@ const MapComponent: React.FC = () => {
     };
     fetchData();
   }, []);
-  function Numbers({ n }) {
+  function Numbers(n: any) {
     const { number } = useSpring({
       from: { number: 0 },
       number: n,

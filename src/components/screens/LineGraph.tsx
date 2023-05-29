@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
+import type { ChartData, ChartOptions } from 'chart.js';
 import {
   Chart,
   CategoryScale,
@@ -72,7 +73,7 @@ const LineGraph: React.FC = () => {
   };
 
   // Chart options configuration
-  const options = {
+  const options: ChartOptions<'line'> = {
     responsive: true,
     plugins: {
       legend: {
@@ -80,7 +81,7 @@ const LineGraph: React.FC = () => {
       },
       title: {
         display: true,
-        text: 'Line Graph Example',
+        // text: 'Line Graph Example',
       },
     },
     scales: {
